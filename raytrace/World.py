@@ -1,5 +1,6 @@
 from . import ViewPlane
 from . import Tracer
+from . import samplers
 from PIL import Image
 import pygame
 import math
@@ -13,6 +14,7 @@ class World(object):
     def __init__(self):
         self.viewplane = ViewPlane.ViewPlane(resolution=(500,200), pixel_size=1.0)
         self.background_color = (0.0,0.0,0.0)
+        self.sampler = samplers.Regular(1)
         self.objects=[]
 
     def set_bgcolor(self,bgcolor):
@@ -25,11 +27,19 @@ class World(object):
         im = Image.new("RGB", self.viewplane.resolution)
         tracer = Tracer.Tracer(self)
         for row in self.viewplane:
-            for ray, pixel in row:
-                print pixel
+            for pixel in row:
                 imagePxPos = (pixel[0], self.viewplane.resolution[1]-pixel[1]-1)
+                color = numpy.array([0.0, 0.0, 0.0])
+                for subsample in sampler:
+                    origin = numpy.zeros(3)
+                    origin[0] = self.viewplane.pixel_size*(column - self.viewplane.resolution[0] / 2 + subsample[0])
+                    origin[1] = self.viewplane.pixel_size*(row - self.viewplane.resolution[1] / 2 + subsample[1])
+                    origin[2] = 100.0
+                    ray = Ray.Ray(origin = origin, direction = (0.0,0.0,-1.0))
 
-                color = tracer.trace_ray(ray)
+                    color += numpy.array(tracer.trace_ray(ray))
+                color /= sampler.num_samples
+
                 im.putpixel(imagePxPos, (int(color[0]*255), int(color[1]*255), int(color[2]*255)))
                 pxarray[imagePxPos[0]][imagePxPos[1]] = (int(color[0]*255), int(color[1]*255), int(color[2]*255))
 
@@ -63,3 +73,8 @@ class World(object):
    
 
                 
+        self.sampler = sampler.Regular(1)
+
+    def set_sampler(self, sampler):
+        self.sampler = sampler
+
