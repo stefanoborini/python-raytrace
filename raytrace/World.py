@@ -14,7 +14,7 @@ epsilon = 1.0e-7
 
 class World(object):
     def __init__(self):
-        self.viewplane = ViewPlane.ViewPlane(resolution=(100,100), pixel_size=1.0)
+        self.viewplane = ViewPlane.ViewPlane(resolution=(200,200), pixel_size=1.0)
         self.background_color = (0.0,0.0,0.0)
         self.sampler = samplers.Regular(9,10)
         self.objects=[]
@@ -49,12 +49,12 @@ class World(object):
             pygame.display.flip() 
 
         im.save("render.png", "PNG")
-        while True: 
-           for event in pygame.event.get(): 
-              if event.type == pygame.QUIT: 
-                  sys.exit(0) 
-              else: 
-                  print event 
+        #while True: 
+        #   for event in pygame.event.get(): 
+        #      if event.type == pygame.QUIT: 
+        #          sys.exit(0) 
+        #      else: 
+        #          print event 
 
     def add_object(self, o):
         self.objects.append(o)
