@@ -1,4 +1,3 @@
-import numpy
 from . import Ray
 
 class ViewPlane(object):
