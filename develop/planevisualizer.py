@@ -6,7 +6,7 @@ import itertools
 from raytrace import samplers
 pygame.init() 
 
-class Visualizer:
+class PlaneVisualizer:
     def __init__(self,rows,columns):
         self.rows = rows
         self.columns = columns
@@ -41,8 +41,8 @@ class Visualizer:
         self.plot_grid()
     def refresh(self):
         pygame.display.flip() 
-v=Visualizer(8,8)
-j=samplers.NRooks(64,5)
+v=PlaneVisualizer(8,8)
+j=samplers.Jittered(64,5)
 while True:
     v.clear()
     for point in itertools.islice(j,64):
