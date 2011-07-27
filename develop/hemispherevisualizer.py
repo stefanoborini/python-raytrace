@@ -31,13 +31,12 @@ class HemisphereVisualizer:
     def refresh(self):
         pygame.display.flip() 
 v=HemisphereVisualizer()
-j=samplers.Jittered(256,5)
-while True:
-    v.clear()
-    for point in itertools.islice(j.hemisphereiter(10),256):
-        v.add_point(point, (0,0,0))
-    v.refresh()
-    time.sleep(1)
+j=samplers.Jittered(1024,5)
+v.clear()
+for point in itertools.islice(j.hemisphereiter(100),1024):
+    v.add_point(point, (0,0,0))
+v.refresh()
+time.sleep(1)
 
 while True: 
    for event in pygame.event.get(): 

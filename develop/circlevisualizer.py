@@ -27,12 +27,10 @@ class CircleVisualizer:
         pygame.display.flip() 
 v=CircleVisualizer()
 j=samplers.Jittered(256,5)
-while True:
-    v.clear()
-    for point in itertools.islice(j.diskiter(),256):
-        v.add_point(point, (0,0,0))
-    v.refresh()
-    time.sleep(1)
+v.clear()
+for point in itertools.islice(j.diskiter(),256):
+    v.add_point(point, (0,0,0))
+v.refresh()
 
 while True: 
    for event in pygame.event.get(): 

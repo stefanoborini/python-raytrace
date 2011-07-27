@@ -45,7 +45,7 @@ v=PlaneVisualizer(8,8)
 j=samplers.Jittered(64,5)
 while True:
     v.clear()
-    for point in itertools.islice(j,64):
+    for point in itertools.islice(j.squareiter(),64):
         v.add_point(point, (0,0,0))
     v.refresh()
     time.sleep(1)
