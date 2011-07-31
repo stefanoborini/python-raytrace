@@ -25,7 +25,7 @@ class World(object):
         self.viewplane = ViewPlane(resolution=(200,200), pixel_size=1.0)
         self.background_color = (0.0,0.0,0.0)
         self.sampler = samplers.Regular(9,10)
-        self.camera = cameras.PinholeCamera(eye_point = (300,400,500), look_at = (0,0,-50), up_vector=(0,1,0), viewplane_distance=400)
+        self.camera = cameras.PinholeCamera(eye_point = (100,100,100), look_at = (0,0,0), up_vector=(0,1,0), viewplane_distance=10)
         self.objects=[]
 
     def set_bgcolor(self,bgcolor):
@@ -55,3 +55,9 @@ class World(object):
 
     def render(self):
         self.camera.render(self)
+
+    def set_camera(self, camera):
+        self.camera = camera
+    def get_camera(self):
+        return camera
+

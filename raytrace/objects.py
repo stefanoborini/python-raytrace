@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 import math
 import sys
-from . import math as rtmath
+from . import mathop
 
 class Sphere(object):
     def __init__(self, center, radius, color):
@@ -14,9 +14,9 @@ class Sphere(object):
                 ray.origin[1] - self.center[1],
                 ray.origin[2] - self.center[2])
 
-        a = rtmath.dot(ray.direction, ray.direction)
-        b = 2.0 * rtmath.dot(temp, ray.direction)
-        c = rtmath.dot(temp, temp) - self.radius * self.radius
+        a = mathop.dot(ray.direction, ray.direction)
+        b = 2.0 * mathop.dot(temp, ray.direction)
+        c = mathop.dot(temp, temp) - self.radius * self.radius
         disc = b * b - 4.0 * a * c
         
         if (disc < 0.0):
@@ -48,7 +48,7 @@ class Sphere(object):
                                 ray.origin[1] + t * ray.direction[1],
                                 ray.origin[2] + t * ray.direction[2]
                                 )
-                return ShadeRecord.ShadeRecord(normal=normal, hit_point=hit_point, parameter=t, color=self.color)
+                return ShadeRecord(normal=normal, hit_point=hit_point, parameter=t, color=self.color)
 
         return None    
 

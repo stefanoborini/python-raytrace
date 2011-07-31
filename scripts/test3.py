@@ -9,5 +9,6 @@ w.add_object(objects.Sphere(center=(0.0,0.0,0.0), radius=10.0, color=(1.0,1.0,1.
 w.add_object(objects.Sphere(center=(50.0,0.0,0.0), radius=10.0, color=(1.0,0.0,0.0)))
 w.add_object(objects.Sphere(center=(0.0,50.0,0.0), radius=10.0, color=(0.0,1.0,0.0)))
 w.add_object(objects.Sphere(center=(0.0,0.0,50.0), radius=10.0, color=(0.0,0.0,1.0)))
+w.set_camera(cameras.PinholeCamera(look_at=(0.0,0.0,0.0), eye_point=(100.0,0.0,0.0), viewplane_distance=90.0, up_vector=(0.0,1.0,0.0)))
 w.render()
 
