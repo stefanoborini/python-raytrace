@@ -1,7 +1,7 @@
+from __future__ import absolute_import
 import math
 import sys
-from .. import ShadeRecord
-from .. import math as rtmath
+from . import math as rtmath
 
 class Sphere(object):
     def __init__(self, center, radius, color):
@@ -9,7 +9,6 @@ class Sphere(object):
         self.radius = radius
         self.color = color
 
-    #@profile
     def hit(self, ray):
         temp = (ray.origin[0] - self.center[0],
                 ray.origin[1] - self.center[1],
@@ -36,7 +35,7 @@ class Sphere(object):
                                 ray.origin[2] + t * ray.direction[2]
                                 )
 
-                return ShadeRecord.ShadeRecord(normal=normal, hit_point=hit_point, parameter=t, color=self.color)
+                return ShadeRecord(normal=normal, hit_point=hit_point, parameter=t, color=self.color)
 
             t = (-b + e) / denom
 
@@ -53,3 +52,24 @@ class Sphere(object):
 
         return None    
 
+
+#from .. import ShadeRecord
+#from .. import math
+#class Plane(object):
+#    def __init__(self, point, normal, color):
+#        self.point = point
+#        self.normal = normal
+#        self.color = color
+#    def hit(self, ray):
+#        t = math.dot((self.point - ray.origin), self.normal) / math.dot(ray.direction, self.normal)
+#        if (t > 1.0e-7):
+#            return ShadeRecord.ShadeRecord(normal=self.normal, hit_point=(ray.origin + t * ray.direction), parameter=t, color=self.color)
+#
+#        return None
+
+class ShadeRecord(object):
+    def __init__(self, hit_point, normal, parameter, color):
+        self.hit_point = hit_point
+        self.normal = normal
+        self.color = color
+        self.parameter = parameter

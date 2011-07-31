@@ -4,8 +4,23 @@ import sys
 import numpy
 from PIL import Image
 import pygame
-from . import Ray
-from . import Tracer
+
+class Ray(object):
+    def __init__(self, origin, direction):
+        self.origin = origin
+        self.direction = direction
+
+class Tracer(object):
+    def __init__(self, world):
+        self.world = world
+
+    def trace_ray(self, ray):
+        foremost = self.world.hit_bare_bones_object(ray)
+        if foremost:
+            return foremost.color
+        else:
+            return self.world.background_color
+
     
 class BaseCamera(object):
     def __init__(self, eye_point, look_at, up_vector, viewplane_distance):
@@ -36,7 +51,7 @@ class PinholeCamera(BaseCamera):
         window = pygame.display.set_mode(world.viewplane.resolution) 
         pxarray = pygame.PixelArray(window)
         im = Image.new("RGB", world.viewplane.resolution)
-        tracer = Tracer.Tracer(world)
+        tracer = Tracer(world)
         
         num_samples = world.sampler.num_samples_per_set()
         pixel_size = world.viewplane.pixel_size / self.zoom
@@ -56,7 +71,7 @@ class PinholeCamera(BaseCamera):
                                             + plane_point[1] * numpy.array(self._v) 
                                             - self._viewplane_distance * numpy.array(self._w)) )
                     direction = tuple( direction / numpy.linalg.norm(direction))
-                    ray = Ray.Ray(origin = self._eye_point, direction = direction )
+                    ray = Ray(origin = self._eye_point, direction = direction )
 
                     c = tracer.trace_ray(ray)
                     color = (   color[0] + c[0],
