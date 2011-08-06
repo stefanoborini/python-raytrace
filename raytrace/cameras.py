@@ -22,7 +22,6 @@ class Tracer(object):
         else:
             return self.world.background_color
 
-    
 class BaseCamera(object):
     def __init__(self, **kwargs):
         self._eye_point = kwargs["eye_point"]
